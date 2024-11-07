@@ -1,5 +1,6 @@
 ﻿using Contracts.Interface;
 using Domains.Entities;
+using Infrastructure.DataAccesses.Seedes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -26,6 +27,7 @@ namespace Infrastructure.DataAccesses.DbContexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExampleDbContext).Assembly);
+            modelBuilder.SetSiteDefaultData(_userContext);
         }
     }
 }
