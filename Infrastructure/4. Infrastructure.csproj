@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>$(MSBuildProjectName.Replace("4. ", ""))</RootNamespace>
+    <AssemblyName>$(MSBuildProjectName.Replace("4. ", ""))</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
