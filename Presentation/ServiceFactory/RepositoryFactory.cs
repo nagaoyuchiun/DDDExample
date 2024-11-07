@@ -1,5 +1,8 @@
-﻿using Infrastructure.Interfaces.IRepository;
+﻿using Contracts.Interface;
+using Contracts.Interface.IRepository;
+using Infrastructure.DataAccesses.DbContexts;
 using Infrastructure.Repositories;
+using Infrastructure.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

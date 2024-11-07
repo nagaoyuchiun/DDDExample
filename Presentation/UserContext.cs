@@ -1,4 +1,4 @@
-﻿using Infrastructure.Interfaces;
+﻿using Contracts.Interface;
 
 namespace Presentation
 {

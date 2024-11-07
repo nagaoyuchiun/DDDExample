@@ -1,5 +1,9 @@
 ﻿using Application.Service;
-using Infrastructure.Interfaces.IService;
+using Contracts.Interface;
+using Contracts.Interface.IProvider;
+using Contracts.Interface.IService;
+using Infrastructure.DataAccesses.DbContexts;
+using Infrastructure.UnitOfWorks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +14,12 @@ namespace Presentation.ServiceFactory
 {
     public static class ApplicationFactory
     {
-        public static IServiceCollection AddService(this IServiceCollection services)
+        public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUnitOfWork<ExampleDbContext>, UnitOfWork<ExampleDbContext>>();
+            services.AddScoped<IUserContext, UserContext>();
+            services.AddScoped<ITimeProvider, Infrastructure.Provider.TimeProvide>();
             return services;
         }
     }

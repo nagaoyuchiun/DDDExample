@@ -1,8 +1,9 @@
-﻿using Domains;
+﻿using Contracts.Interface;
+using Contracts.Interface.IProvider;
+using Contracts.Interface.IRepository;
+using Domains;
 using Domains.Entities;
 using Infrastructure.DataAccesses.DbContexts;
-using Infrastructure.Interfaces;
-using Infrastructure.Interfaces.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,41 +15,52 @@ namespace Infrastructure.Repositories
 {
     public class SiteRepository : ISiteRepository
     {
-        private readonly ExampleDbContext _context;
-        public SiteRepository(ExampleDbContext context)
+        private readonly IUserContext _userContext;
+        private readonly ITimeProvider _timeProvider;
+        private readonly IUnitOfWork<ExampleDbContext> _unitOfWork;
+        public SiteRepository(IUserContext userContext, ITimeProvider timeProvider, IUnitOfWork<ExampleDbContext> unitOfWork)
         {
-            _context = context;
+            _userContext = userContext;
+            _timeProvider = timeProvider;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IIdentifiable> Create(Site site)
         {
-            _context.Sites.Add(site);
-            await _context.SaveChangesAsync();
+            site.CreateAtNo = _userContext.UserNo;
+            site.Id = Guid.NewGuid();
+            site.CreateDateTime = _timeProvider.GetNow();
+            _unitOfWork.GetContext().Sites.Add(site);
+            await _unitOfWork.SaveChangesAsync();
             return site;
         }
 
         public async Task Delete(Site site)
         {
             site.GenerateDeleteKey();
-            _context.Sites.Update(site);
-            await _context.SaveChangesAsync();
+            site.UpdateAtNo = _userContext.UserNo;
+            site.UpdateDateTime = _timeProvider.GetNow();
+            _unitOfWork.GetContext().Sites.Update(site);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Site?> Get(int id)
         {
-            return await _context.Sites.FindAsync(id);
+            return await _unitOfWork.GetContext().Sites.FindAsync(id);
         }
 
-        public async  Task<IEnumerable<Site>> Query(IQueryParameter<Site> queryParameter)
+        public async Task<IEnumerable<Site>> Query(IQueryParameter<Site> queryParameter)
         {
-            var query = _context.Sites.AsQueryable();
+            var query = _unitOfWork.GetContext().Sites.AsQueryable();
             return await queryParameter.ApplyFilters(query).ToListAsync();
         }
 
         public async Task Update(Site site)
         {
-            _context.Sites.Update(site);
-            await _context.SaveChangesAsync();
+            site.UpdateAtNo = _userContext.UserNo;
+            site.UpdateDateTime = _timeProvider.GetNow();
+            _unitOfWork.GetContext().Sites.Update(site);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

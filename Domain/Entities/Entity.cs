@@ -15,11 +15,11 @@ namespace Domains.Entities
 
         public long No { get; }
 
-        public Guid Id { get; } = Guid.NewGuid();
+        public Guid Id { get; set; } 
 
-        public DateTime CreateDateTime { get; }
+        public DateTime CreateDateTime { get; set; } 
 
-        public long CreateAtNo { get; }
+        public long CreateAtNo { get; set; }
 
         public void GenerateDeleteKey()
         {

@@ -1,5 +1,5 @@
-﻿using Domains.Entities;
-using Infrastructure.Interfaces;
+﻿using Contracts.Interface;
+using Domains.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
