@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj" />
-    <ProjectReference Include="..\Domain\Domains.csproj" />
+    <ProjectReference Include="..\Contracts\3. Contracts.csproj" />
+    <ProjectReference Include="..\Domain\5. Domains.csproj" />
   </ItemGroup>
 
 </Project>

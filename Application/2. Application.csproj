@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domains.csproj" />
+    <ProjectReference Include="..\Contracts\3. Contracts.csproj" />
+    <ProjectReference Include="..\Infrastructure\4. Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Event\" />
+    <Folder Include="Job\" />
   </ItemGroup>
 
 </Project>
